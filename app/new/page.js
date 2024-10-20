@@ -4,16 +4,28 @@
 // npm install @react-google-maps/api
 // ```
 
-// problems: NaN, update when change $ or %, update tip when amount increases
+import { useState, useEffect } from "react";
+// import { useLoadScript, Autocomplete } from "@react-google-maps/api";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
-import React, { useState, useEffect } from 'react';
-// import { useLoadScript, Autocomplete } from '@react-google-maps/api';
+const firebaseConfig = {
+    apiKey: process.env.DB_API_KEY,
+    authDomain: process.env.DB_AUTH_DOMAIN,
+    projectId: process.env.DB_PROJECT_ID,
+    storageBucket: process.env.DB_STORAGE_BUCKET,
+    messagingSenderId: process.env.DB_SENDER_ID,
+    appId: process.env.DB_APP_ID
+};
 
-const libraries = ['places'];
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const ExpenseEntry = () => {
+const libraries = ["places"];
+
+const ExpenseEntry = ({ user }) => {
     //   const { isLoaded } = useLoadScript({
-    //     googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY', // Replace with your Google Maps API key
+    //     googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your Google Maps API key
     //     libraries,
     //   });
 
@@ -21,8 +33,8 @@ const ExpenseEntry = () => {
     const [item, setItem] = useState("");
     const [vendor, setVendor] = useState("");
     const [amount, setAmount] = useState(0);
-    const [selectedType, setSelectedType] = useState("percentage");
     const [tip, setTip] = useState(0);
+    const [selectedType, setSelectedType] = useState("percentage");
     const [paymentType, setPaymentType] = useState("");
     const [notes, setNotes] = useState("");
     const [total, setTotal] = useState(0);
@@ -37,12 +49,39 @@ const ExpenseEntry = () => {
         }
     });
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (date === "" || item === "" || amount === 0 || paymentType === "") {
+            alert("Please fill in required information.");
+            return;
+        }
+
+        try {
+            const docRef = await addDoc(collection(db, "entries"), {
+                user,
+                date,
+                item,
+                vendor,
+                amount,
+                tip,
+                selectedType,
+                paymentType,
+                notes,
+                total
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    };
+
     return (
         <div className="w-1/2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] dark:bg-neutral-900 p-8 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry - ${ total }</h2>
-            <form className="space-y-4">
+            <h2 className="text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry - ${total}</h2>
+            <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date</label>
+                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
                     <input
                         type="date"
                         value={date}
@@ -53,7 +92,7 @@ const ExpenseEntry = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="item_selector">Item</label>
+                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="item_selector">Item*</label>
                     <textarea
                         value={item}
                         onChange={(e) => setItem(e.target.value)}
@@ -80,7 +119,7 @@ const ExpenseEntry = () => {
                     </Autocomplete> */}
                 </div>
                 <div>
-                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="amount_selector">Amount</label>
+                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="amount_selector">Amount*</label>
                     <div className="flex flex-row items-center gap-2">
                         <p className="text-xl">$</p>
                         <input
@@ -96,20 +135,20 @@ const ExpenseEntry = () => {
                 <div>
                     <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="tip_selector">Tip (select $ or % by clicking)</label>
                     <div className="flex flex-row items-center gap-2">
-                    <button type="button" className={`text-xl ${selectedType === "dollar" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("dollar")}>$</button>
-                    <input
-                        type="number"
-                        value={tip}
-                        onChange={(e) => setTip(parseFloat(e.target.value))}
-                        id="tip_selector"
-                        name="tip_selector"
-                        className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md"
-                    />
-                    <button type="button" className={`text-xl ${selectedType === "percentage" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("percentage")}>%</button>
+                        <button type="button" className={`text-xl ${selectedType === "dollar" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("dollar")}>$</button>
+                        <input
+                            type="number"
+                            value={tip}
+                            onChange={(e) => setTip(parseFloat(e.target.value))}
+                            id="tip_selector"
+                            name="tip_selector"
+                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md"
+                        />
+                        <button type="button" className={`text-xl ${selectedType === "percentage" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("percentage")}>%</button>
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="payment_selector">Payment Type</label>
+                    <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="payment_selector">Payment Type*</label>
                     <select
                         value={paymentType}
                         onChange={(e) => setPaymentType(e.target.value)}
@@ -118,11 +157,11 @@ const ExpenseEntry = () => {
                         className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md"
                     >
                         <option value="" disabled>Select an option</option>
-                        <option value="cash">Cash</option>
-                        <option value="credit">Credit</option>
-                        <option value="debit">Debit</option>
-                        <option value="apple_cash">Apple Cash</option>
-                        <option value="other">Other</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Credit">Credit</option>
+                        <option value="Debit">Debit</option>
+                        <option value="Apple Cash">Apple Cash</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div>
