@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
+        API_KEY: process.env.API_KEY,
         DB_API_KEY: process.env.DB_API_KEY,
         DB_AUTH_DOMAIN: process.env.DB_AUTH_DOMAIN,
         DB_PROJECT_ID: process.env.DB_PROJECT_ID,

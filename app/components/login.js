@@ -36,7 +36,6 @@ const Login = ({ setUser }) => {
         try {
             const result = await signInWithPopup(auth, provider);
             setUser(result.user.uid);
-            console.log("User Info:", result.user);
         } catch (error) {
             console.error("Error during login:", error);
         }
@@ -56,14 +55,14 @@ const Login = ({ setUser }) => {
             {loginStatus ? (
                 <button
                     onClick={handleLogout}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700"
+                    className="bg-blue-500 text-neutral-100 font-bold py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700"
                 >
                     Log Out
                 </button>
             ) : (
                 <button
                     onClick={handleLogin}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700"
+                    className="bg-blue-500 text-neutral-100 font-bold py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700"
                 >
                     Log In
                 </button>
