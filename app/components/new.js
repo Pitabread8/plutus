@@ -75,11 +75,17 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         }
     }, [openEdit]);
 
+    const isDateAfterToday = (date) => {
+        const today = new Date();
+        const inputDate = new Date(date);
+        return inputDate <= today;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (date === "" || purchase === "" || amount === 0 || paymentType === "") {
-            alert("Please fill in required information.");
+        if (date === "" || !isDateAfterToday(date) || purchase === "" || amount <= 0 || tip < 0 || paymentType === "") {
+            alert("Please fill in required fields with valid information.");
             return;
         }
 
@@ -129,50 +135,69 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
 
     return (
         <div className="w-screen h-screen backdrop-blur-md">
-            <div className="w-1/2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] dark:bg-neutral-900 p-8 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry - ${total}</h2>
-                <button className="bg-red-500 hover:bg-red-700 text-neutral-100 font-bold py-2 px-4 m-7 absolute top-0 right-0 rounded" onClick={cancel}>
+            <div className="w-3/4 md:w-1/2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] dark:bg-neutral-900 p-4 md:p-8 rounded-lg shadow-md">
+                <h2 className="text-base md:text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry<span className="hidden md:inline"> - ${total}</span></h2>
+                <button className="bg-red-500 hover:bg-red-700 text-neutral-100 text-xs md:text-sm font-bold py-1 px-2 md:py-2 md:px-4 m-4 md:m-7 fixed top-0 right-0 rounded" onClick={cancel}>
                     Cancel
                 </button>
                 <UploadEntry setUploadData={setUploadData} />
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
+                        <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
                         <input
                             type="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
                             id="date_selector"
                             name="date_selector"
-                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
+                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="purchase_selector">Purchase*</label>
+                        <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="purchase_selector">Purchase*</label>
                         <textarea
                             value={purchase}
                             onChange={(e) => setPurchase(e.target.value)}
                             id="purchase_selector"
                             name="purchase_selector"
-                            className="mt-1 block w-full h-[2.75em] p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
+                            className="mt-1 block w-full h-[3em] p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="amount_selector">Amount*</label>
-                        <div className="flex flex-row items-center gap-2">
-                            <p className="text-xl">$</p>
-                            <input
-                                type="number"
-                                value={amount}
-                                onChange={(e) => setAmount(parseFloat(e.target.value))}
-                                id="amount_selector"
-                                name="amount_selector"
-                                className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
-                            />
+                    <div className="flex flex-row md:flex-col gap-4">
+                        <div className="w-1/2 md:w-full">
+                            <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="payment_selector">Payment Type*</label>
+                            <select
+                                value={paymentType}
+                                onChange={(e) => setPaymentType(e.target.value)}
+                                id="payment_selector"
+                                name="payment_selector"
+                                className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                            >
+                                <option value="" disabled>Select</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Credit">Credit</option>
+                                <option value="Debit">Debit</option>
+                                <option value="Apple Cash">Apple Cash</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div className="w-1/2 md:w-full">
+                            <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="amount_selector">Amount*</label>
+                            <div className="flex flex-row items-center gap-2">
+                                <p className="text-xl">$</p>
+                                <input
+                                    type="number"
+                                    value={amount}
+                                    onChange={(e) => setAmount(parseFloat(e.target.value))}
+                                    id="amount_selector"
+                                    name="amount_selector"
+                                    className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="tip_selector">Tip (select $ or % by clicking)</label>
+                        <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="tip_selector">Tip (select $ or % by clicking)</label>
                         <div className="flex flex-row items-center gap-2">
                             <button type="button" className={`text-xl ${selectedType === "dollar" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("dollar")}>$</button>
                             <input
@@ -181,36 +206,20 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                                 onChange={(e) => setTip(parseFloat(e.target.value))}
                                 id="tip_selector"
                                 name="tip_selector"
-                                className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
+                                className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
                             />
                             <button type="button" className={`text-xl ${selectedType === "percentage" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("percentage")}>%</button>
                         </div>
                     </div>
+
                     <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="payment_selector">Payment Type*</label>
-                        <select
-                            value={paymentType}
-                            onChange={(e) => setPaymentType(e.target.value)}
-                            id="payment_selector"
-                            name="payment_selector"
-                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
-                        >
-                            <option value="" disabled>Select an option</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Credit">Credit</option>
-                            <option value="Debit">Debit</option>
-                            <option value="Apple Cash">Apple Cash</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="notes_selector">Notes</label>
+                        <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="notes_selector">Notes</label>
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             id="notes_selector"
                             name="notes_selector"
-                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
+                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
                         />
                     </div>
                     <button
