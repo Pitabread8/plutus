@@ -1,13 +1,9 @@
 "use client"
 
-// npm install @react-google-maps/api
-// MOVE TO COMPONENTS, DELETE COMMENTED OUT WORK
-
 import { useState, useEffect } from "react";
-// import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import UploadEntry from "../components/upload";
+import UploadEntry from "./upload";
 
 const firebaseConfig = {
     apiKey: process.env.DB_API_KEY,
@@ -21,17 +17,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const libraries = ["places"];
-
 const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
-    //   const { isLoaded } = useLoadScript({
-    //     googleMapsApiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your Google Maps API key
-    //     libraries,
-    //   });
-
     const [date, setDate] = useState("");
     const [purchase, setPurchase] = useState("");
-    // const [vendor, setVendor] = useState("");
     const [amount, setAmount] = useState(0);
     const [tip, setTip] = useState(0);
     const [selectedType, setSelectedType] = useState("percentage");
@@ -168,23 +156,6 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                             name="purchase_selector"
                             className="mt-1 block w-full h-[2.75em] p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
                         />
-                    </div>
-                    <div>
-                        {/* <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="location_selector">Location</label>
-                        <Autocomplete
-                        onPlaceChanged={() => {
-                            const place = autocomplete.getPlace();
-                            setVendor(place.formatted_address);
-                        }}
-                    >
-                        <input
-                            type="text"
-                            placeholder="Search Vendor"
-                            id="location_selector"
-                            name="location_selector"
-                            className="mt-1 block w-full p-2 border dark:border-neutral-100 dark:bg-neutral-900 rounded-md text-sm"
-                        />
-                    </Autocomplete> */}
                     </div>
                     <div>
                         <label className="block text-sm font-medium dark:text-neutral-400" htmlFor="amount_selector">Amount*</label>

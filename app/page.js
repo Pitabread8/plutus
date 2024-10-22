@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from 'react';
 import Login from "./components/login";
-import ExpenseEntry from "./new/page";
+import ExpenseEntry from "./components/new";
 import EntryList from "./components/entrylist";
 import { MdOutlineAdd } from "react-icons/md";
 
