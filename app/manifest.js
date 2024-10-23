@@ -8,17 +8,12 @@ export default function manifest() {
         orientation: "any",
         background_color: "#0a0a0a",
         theme_color: "#5ebb47",
-        // icons: [
-        //     {
-        //         src: "/icon-192x192.png",
-        //         sizes: "192x192",
-        //         type: "image/png",
-        //     },
-        //     {
-        //         src: "/icon-512x512.png",
-        //         sizes: "512x512",
-        //         type: "image/png",
-        //     },
-        // ],
+        icons: [
+            {
+                src: "/logoblack.png",
+                sizes: "2322x2322",
+                type: "image/png",
+            },
+        ],
     }
 }
