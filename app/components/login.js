@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
@@ -69,10 +70,11 @@ const Login = ({ setUser }) => {
             )} 
             {loginStatus === false && (
                 <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 md:gap-4 items-center justify-center w-5/6">
+                    <Image src={"/logo.png"} width={250} height={250} alt={"Plutus logo"} className="w-1/2 h-1/2 sm:w-1/3 sm:h-1/3 lg:w-1/6 lg:h-1/6" />
                     <h1 className="text-2xl md:text-6xl font-extrabold">Welcome to Plutus!</h1>
                     <div className="flex flex-row gap-2">
                         <h2 className="text-lg md:text-3xl">Begin your journey</h2>
-                        <IoArrowDownOutline className="text-blue-500 text-2xl md:text-4xl" />
+                        <IoArrowDownOutline className="text-2xl md:text-4xl" />
                     </div>
                     <button
                         onClick={handleLogin}

@@ -59,10 +59,10 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
     }
 
     return (
-        <div className="rounded-xl bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
-            <table className="p-8 w-full dark:bg-neutral-900 rounded-lg border-collapse">
+        <div className="rounded-xl bg-neutral-200 dark:bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
+            <table className="p-8 w-full bg-neutral-200 dark:bg-neutral-900 rounded-lg border-collapse">
                 <thead>
-                    <tr className="font-bold dark:bg-neutral-700 dark:text-neutral-100">
+                    <tr className="font-bold bg-neutral-400 dark:bg-neutral-700 dark:text-neutral-100">
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tl-lg">Date</th>
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">Purchase</th>
                         <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Amount</th>
@@ -75,7 +75,7 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
                 </thead>
                 <tbody>
                     {entries.map((entry, index) => (
-                        <tr className="font-medium p-4 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:text-neutral-300 rounded-bl-lg rounded-br-lg" key={index}>
+                        <tr className="font-medium p-4 bg-neutral-300 hover:bg-neutral-500 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:text-neutral-300 rounded-bl-lg rounded-br-lg" key={index}>
                             <td className="p-2 text-xs lg:hidden">{convertDate(entry.date).slice(0, 5)}</td>
                             <td className="py-4 px-6 text-base hidden lg:table-cell">{convertDate(entry.date)}</td>
                             <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">{entry.purchase}</td>
