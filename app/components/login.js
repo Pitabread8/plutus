@@ -56,7 +56,7 @@ const Login = ({ setUser }) => {
 
     return (
         <>
-            {loginStatus ? (
+            {loginStatus && (
                 <div>
                     <p className="text-base md:text-xl font-bold my-6 mx-8 absolute top-0 left-0">{name}</p>
                     <button
@@ -66,7 +66,8 @@ const Login = ({ setUser }) => {
                         Log Out
                     </button>
                 </div>
-            ) : (
+            )} 
+            {loginStatus === false && (
                 <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 md:gap-4 items-center justify-center w-5/6">
                     <h1 className="text-2xl md:text-6xl font-extrabold">Welcome to Plutus!</h1>
                     <div className="flex flex-row gap-2">

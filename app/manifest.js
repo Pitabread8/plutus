@@ -7,7 +7,7 @@ export default function manifest() {
         display: "standalone",
         orientation: "any",
         background_color: "#0a0a0a",
-        theme_color: "#f5f5f5",
+        theme_color: "#5ebb47",
         // icons: [
         //     {
         //         src: "/icon-192x192.png",

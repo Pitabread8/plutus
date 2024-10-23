@@ -20,9 +20,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const EntryList = ({ user, setOpenEdit, openNew, openEdit }) => {
+const convertDate = (date) => {
+    const [year, month, day] = date.split('-');
+    return `${month}/${day}/${year}`;
+};
+
+const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, deleteStatus }) => {
     const [entries, setEntries] = useState([]);
-    const [deleteStatus, setDeleteStatus] = useState(false)
 
     useEffect(() => {
         const fetchEntries = async () => {
@@ -32,6 +36,9 @@ const EntryList = ({ user, setOpenEdit, openNew, openEdit }) => {
                 id: doc.id,
                 ...doc.data()
             }));
+            entriesList.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
             setEntries(entriesList);
         };
 
@@ -52,16 +59,16 @@ const EntryList = ({ user, setOpenEdit, openNew, openEdit }) => {
     }
 
     return (
-        <div className="rounded-xl absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
+        <div className="rounded-xl bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
             <table className="p-8 w-full dark:bg-neutral-900 rounded-lg border-collapse">
                 <thead>
                     <tr className="font-bold dark:bg-neutral-700 dark:text-neutral-100">
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tl-lg">Date</th>
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">Purchase</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg hidden lg:table-cell">Amount</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg hidden lg:table-cell">Tip</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg hidden lg:table-cell">Payment</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg hidden lg:table-cell">Notes</th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Amount</th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Tip</th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Payment</th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Notes</th>
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">Total</th>
                         <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tr-lg">Actions</th>
                     </tr>
@@ -69,12 +76,13 @@ const EntryList = ({ user, setOpenEdit, openNew, openEdit }) => {
                 <tbody>
                     {entries.map((entry, index) => (
                         <tr className="font-medium p-4 dark:bg-neutral-800 dark:hover:bg-neutral-600 dark:text-neutral-300 rounded-bl-lg rounded-br-lg" key={index}>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">{entry.date}</td>
+                            <td className="p-2 text-xs lg:hidden">{convertDate(entry.date).slice(0, 5)}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">{convertDate(entry.date)}</td>
                             <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">{entry.purchase}</td>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base hidden lg:table-cell">${entry.amount}</td>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base hidden lg:table-cell">{entry.selectedType === "percentage" ? `${entry.tip}%` : `$${entry.tip}`}</td>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base hidden lg:table-cell">{entry.paymentType}</td>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base hidden lg:table-cell">{entry.notes}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">${entry.amount}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.selectedType === "percentage" ? `${entry.tip}%` : `$${entry.tip}`}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.paymentType}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.notes}</td>
                             <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">${entry.total}</td>
                             <td className="p-2 md:px-4 flex space-x-2 text-xs md:text-base">
                                 <button className="bg-purple-500 text-neutral-100 p-2 rounded hover:bg-purple-700" onClick={() => setOpenEdit(entry.id)}>
