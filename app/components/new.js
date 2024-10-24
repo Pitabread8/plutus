@@ -35,6 +35,8 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         setAmount(data.amount);
         setTip(data.tip);
         setSelectedType(data.selectedType);
+        setPaymentType(data.paymentType);
+        setNotes(data.notes);
         setTotal(data.total);
     }
 
@@ -134,7 +136,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
     return (
         <div className="w-full h-full backdrop-blur-md fixed top-0 left-0">
             <div className="w-3/4 md:w-1/2 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-neutral-200 dark:bg-neutral-900 p-4 md:p-8 rounded-lg shadow-md">
-                <h2 className="text-base md:text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry<span className="hidden md:inline"> - ${total.toFixed(2)}</span></h2>
+                <h2 className="text-base md:text-2xl font-bold mb-6 dark:text-neutral-100">Expense Entry<span className="hidden md:inline"> - ${parseFloat(total).toFixed(2)}</span></h2>
                 <button className="bg-red-500 hover:bg-red-700 text-neutral-100 text-xs md:text-sm font-bold py-1 px-2 md:py-2 md:px-4 m-4 md:m-7 fixed top-0 right-0 rounded" onClick={cancel}>
                     Cancel
                 </button>
@@ -148,7 +150,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                             onChange={(e) => setDate(e.target.value)}
                             id="date_selector"
                             name="date_selector"
-                            className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                            className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
                         />
                     </div>
                     <div>
@@ -169,7 +171,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                                 onChange={(e) => setPaymentType(e.target.value)}
                                 id="payment_selector"
                                 name="payment_selector"
-                                className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                                className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
                             >
                                 <option value="" disabled>Select</option>
                                 <option value="Cash">Cash</option>
@@ -189,7 +191,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                                     onChange={(e) => setAmount(parseFloat(e.target.value))}
                                     id="amount_selector"
                                     name="amount_selector"
-                                    className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                                    className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
                                 />
                             </div>
                         </div>
@@ -204,7 +206,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                                 onChange={(e) => setTip(parseFloat(e.target.value))}
                                 id="tip_selector"
                                 name="tip_selector"
-                                className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
+                                className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
                             />
                             <button type="button" className={`text-xl ${selectedType === "percentage" ? "opacity-100" : "opacity-50"}`} onClick={() => setSelectedType("percentage")}>%</button>
                         </div>

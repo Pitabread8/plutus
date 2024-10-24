@@ -40,8 +40,8 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
             const q = query(collection(db, "entries"), where("user", "==", user));
             const querySnapshot = await getDocs(q);
 
-            let monthTotalCount = 0;
-            let tipTotal = 0;
+            let monthTotalCount = 0.0;
+            let tipTotal = 0.0;
             let tipCount = 0;
             const paymentTypeCounts = {};
 
@@ -70,8 +70,10 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
                 }
             });
 
-            setMonthTotal(monthTotalCount)
-            setTipAverage(tipTotal / tipCount)
+            setMonthTotal(monthTotalCount);
+            if (tipCount > 0) {
+                setTipAverage((tipTotal / tipCount).toFixed(2));
+            }
 
             setChartData({
                 labels: Object.keys(paymentTypeCounts),
@@ -109,7 +111,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
                     </div>
                     <div>
                         <h2 className="font-semibold text-center">Average Tip</h2>
-                        <p className="font-bold text-center text-2xl md:text-5xl">${tipAverage.toFixed(2)}</p>
+                        <p className="font-bold text-center text-2xl md:text-5xl">${tipAverage}</p>
                     </div>
                 </div>
             </div>
