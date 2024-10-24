@@ -100,7 +100,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
     return (
         <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
             <h1 className="font-extrabold hidden md:inline text-8xl mx-36">Plutus</h1>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-evenly md:flex-1 bg-neutral-400 dark:bg-neutral-800 px-8 py-2 md:p-4 rounded-lg">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-evenly md:flex-1 bg-neutral-400 dark:bg-neutral-800 px-12 py-2 md:p-4 rounded-lg">
                 <div className="flex justify-center items-center w-48 md:w-auto">
                     {Object.keys(chartData).length > 0 && <Pie data={chartData} />}
                 </div>

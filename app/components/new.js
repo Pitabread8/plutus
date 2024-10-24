@@ -141,7 +141,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                     Cancel
                 </button>
                 <UploadEntry setUploadData={setUploadData} />
-                <form className="space-y-4" onSubmit={handleSubmit}>
+                <form className="space-y-4 w-full" onSubmit={handleSubmit}>
                     <div>
                         <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
                         <input
@@ -150,7 +150,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                             onChange={(e) => setDate(e.target.value)}
                             id="date_selector"
                             name="date_selector"
-                            className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
+                            className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm"
                         />
                     </div>
                     <div>
