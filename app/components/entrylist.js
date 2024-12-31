@@ -1,7 +1,6 @@
 "use client"
 
-// corner rounding, borders, and setting columns as do not break
-// reformat date, shorten for mobile
+// corner rounding, borders, and setting columns as do not break; update data when wifi & cellular are turned off
 
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";

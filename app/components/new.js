@@ -35,8 +35,6 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         setAmount(data.amount);
         setTip(data.tip);
         setSelectedType(data.selectedType);
-        setPaymentType(data.paymentType);
-        setNotes(data.notes);
         setTotal(data.total);
     }
 
@@ -142,7 +140,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                 </button>
                 <UploadEntry setUploadData={setUploadData} />
                 <form className="space-y-4 w-full" onSubmit={handleSubmit}>
-                    <div>
+                    <div className="w-full">
                         <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
                         <input
                             type="date"
