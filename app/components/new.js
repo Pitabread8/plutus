@@ -1,5 +1,7 @@
 "use client"
 
+// make date full width on mobile and look nicer
+
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
@@ -32,9 +34,11 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
     const updateStates = (data) => {
         setDate(data.date);
         setPurchase(data.purchase);
+        setPaymentType(data.paymentType);
         setAmount(data.amount);
         setTip(data.tip);
         setSelectedType(data.selectedType);
+        setNotes(("notes" in data) ? data.notes : "");
         setTotal(data.total);
     }
 
@@ -140,7 +144,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                 </button>
                 <UploadEntry setUploadData={setUploadData} />
                 <form className="space-y-4 w-full" onSubmit={handleSubmit}>
-                    <div className="w-full">
+                    <div>
                         <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="date_selector">Date*</label>
                         <input
                             type="date"

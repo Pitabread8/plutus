@@ -52,7 +52,7 @@ export default function UploadEntry({ setUploadData }) {
                 [...fileInputEl.files].map(fileToGenerativePart)
             );
 
-            const result = await model.generateContent(["From this image, find the date, vendor, subtotal, tip, tip type ('percentage' or 'dollar'). Save all of this in a dictionary with the date as 'date' in YYYY-MM-DD format, the 'vendor' as 'purchase', the subtotal as 'amount', the tip as 'tip', and the tip type as 'selectedType'. Do not return anything besides the dictinary enclosed in curly braces.", ...imageParts])
+            const result = await model.generateContent(["From this image, find the date, vendor, subtotal, tip, tip type ('percentage' or 'dollar'). Save all of this in a dictionary with the date as 'date' in YYYY-MM-DD format, the 'vendor' as 'purchase', the subtotal as 'amount', the tip as 'tip', and the tip type as 'selectedType'. Do not return anything besides the dictionary enclosed in curly braces.", ...imageParts])
             const response = await result.response.text();
 
             setLoading(false);
