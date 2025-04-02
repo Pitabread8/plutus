@@ -1,6 +1,6 @@
 "use client"
 
-// make date full width on mobile and look nicer
+// make date full width on mobile and look nicer; set date to today
 
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
@@ -168,12 +168,19 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                     <div className="flex flex-row md:flex-col gap-4">
                         <div className="w-1/2 md:w-full">
                             <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="payment_selector">Payment Type*</label>
+                            <div className="mt-1 w-full hidden md:flex flex-row items-center gap-2 text-xs md:text-base">
+                                <button type="button" className={`border border-neutral-900 dark:border-neutral-100 hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${paymentType === "Cash" ? "opacity-100 bg-neutral-700" : "opacity-50"}`} onClick={() => setPaymentType("Cash")}>Cash</button>
+                                <button type="button" className={`border border-neutral-900 dark:border-neutral-100 hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${paymentType === "Credit" ? "opacity-100 bg-neutral-700" : "opacity-50"}`} onClick={() => setPaymentType("Credit")}>Credit</button>
+                                <button type="button" className={`border border-neutral-900 dark:border-neutral-100 hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${paymentType === "Debit" ? "opacity-100 bg-neutral-700" : "opacity-50"}`} onClick={() => setPaymentType("Debit")}>Debit</button>
+                                <button type="button" className={`border border-neutral-900 dark:border-neutral-100 hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${paymentType === "Apple Cash" ? "opacity-100 bg-neutral-700" : "opacity-50"}`} onClick={() => setPaymentType("Apple Cash")}>Apple Cash</button>
+                                <button type="button" className={`border border-neutral-900 dark:border-neutral-100 hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${paymentType === "Other" ? "opacity-100 bg-neutral-700" : "opacity-50"}`} onClick={() => setPaymentType("Other")}>Other</button>
+                            </div>
                             <select
                                 value={paymentType}
                                 onChange={(e) => setPaymentType(e.target.value)}
                                 id="payment_selector"
                                 name="payment_selector"
-                                className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
+                                className="mt-1 block md:hidden w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em]"
                             >
                                 <option value="" disabled>Select</option>
                                 <option value="Cash">Cash</option>

@@ -67,7 +67,7 @@ export default function UploadEntry({ setUploadData }) {
 
 
     return (
-        <div className="w-full my-4 border border-neutral-900 dark:border-neutral-100 bg-neutral-300  dark:bg-neutral-800 p-2 md:p-4 rounded-lg shadow-md flex flex-col md:flex-row justify-center gap-2 md:gap-0 md:justify-around items-center text-xs md:text-sm">
+        <div className="w-full my-4 border border-neutral-900 dark:border-neutral-100 bg-neutral-300 dark:bg-neutral-800 p-2 md:p-4 rounded-lg shadow-md flex flex-col md:flex-row justify-center gap-2 md:gap-0 md:justify-around items-center text-xs md:text-sm">
             <div className="flex items-center justify-center gap-2">
                 <input type="file" id="file_selector" className="hidden" onChange={handleImageChange} />
                 <input type="button" value="Choose File" className="bg-neutral-500 hover:bg-neutral-700 text-neutral-100 font-bold py-1 px-4 rounded" onClick={() => document.getElementById("file_selector").click()} />
