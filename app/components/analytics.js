@@ -1,5 +1,3 @@
-// update data when wifi & cellular are turned off
-
 import React, { useEffect, useState } from "react";
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -75,6 +73,8 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
             setMonthTotal(monthTotalCount.toFixed(2));
             if (tipCount > 0) {
                 setTipAverage((tipTotal / tipCount).toFixed(2));
+            } else {
+                setTipAverage(tipTotal.toFixed(2));
             }
 
             setChartData({
