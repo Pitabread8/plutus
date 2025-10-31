@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // corner rounding, borders, and setting columns as do not break; update data when wifi & cellular are turned off via localStorage
 
@@ -13,14 +13,14 @@ const firebaseConfig = {
     projectId: process.env.DB_PROJECT_ID,
     storageBucket: process.env.DB_STORAGE_BUCKET,
     messagingSenderId: process.env.DB_SENDER_ID,
-    appId: process.env.DB_APP_ID
+    appId: process.env.DB_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const convertDate = (date) => {
-    const [year, month, day] = date.split('-');
+    const [year, month, day] = date.split("-");
     return `${month}/${day}/${year}`;
 };
 
@@ -31,9 +31,9 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
         const fetchEntries = async () => {
             const q = query(collection(db, "entries"), where("user", "==", user));
             const querySnapshot = await getDocs(q);
-            const entriesList = querySnapshot.docs.map(doc => ({
+            const entriesList = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
-                ...doc.data()
+                ...doc.data(),
             }));
             entriesList.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
@@ -55,21 +55,37 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
                 console.error("Error removing document:", error);
             }
         }
-    }
+    };
 
     return (
         <div className="rounded-xl bg-neutral-200 dark:bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
             <table className="p-8 w-full bg-neutral-200 dark:bg-neutral-900 rounded-lg border-collapse">
                 <thead>
                     <tr className="font-bold bg-neutral-400 dark:bg-neutral-700 dark:text-neutral-100">
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tl-lg">Date</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">Purchase</th>
-                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Amount</th>
-                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Tip</th>
-                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Payment</th>
-                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">Notes</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">Total</th>
-                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tr-lg">Actions</th>
+                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tl-lg">
+                            Date
+                        </th>
+                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">
+                            Purchase
+                        </th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">
+                            Amount
+                        </th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">
+                            Tip
+                        </th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">
+                            Payment
+                        </th>
+                        <th scope="col" className="p-6 text-left text-lg hidden lg:table-cell">
+                            Notes
+                        </th>
+                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg">
+                            Total
+                        </th>
+                        <th scope="col" className="p-2 md:p-6 text-left text-sm md:text-lg rounded-tr-lg">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

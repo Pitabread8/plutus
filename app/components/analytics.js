@@ -10,7 +10,7 @@ const firebaseConfig = {
     projectId: process.env.DB_PROJECT_ID,
     storageBucket: process.env.DB_STORAGE_BUCKET,
     messagingSenderId: process.env.DB_SENDER_ID,
-    appId: process.env.DB_APP_ID
+    appId: process.env.DB_APP_ID,
 };
 
 initializeApp(firebaseConfig);
@@ -26,7 +26,7 @@ const convertDate = (date) => {
 
 const getMonth = () => {
     return date.toLocaleString("default", { month: "long" });
-}
+};
 
 Chart.defaults.color = "#f5f5f5";
 
@@ -83,14 +83,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
                     {
                         label: "Payment Types",
                         data: Object.values(paymentTypeCounts),
-                        backgroundColor: [
-                            "rgba(255, 99, 132)",
-                            "rgba(54, 162, 235)",
-                            "rgba(255, 206, 86)",
-                            "rgba(75, 192, 192)",
-                            "rgba(153, 102, 255)",
-                            "rgba(255, 159, 64)",
-                        ],
+                        backgroundColor: ["rgba(255, 99, 132)", "rgba(54, 162, 235)", "rgba(255, 206, 86)", "rgba(75, 192, 192)", "rgba(153, 102, 255)", "rgba(255, 159, 64)"],
                     },
                 ],
             });
@@ -103,9 +96,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
         <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
             <h1 className="font-extrabold hidden md:inline text-8xl mx-36">Plutus</h1>
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-evenly md:flex-1 bg-neutral-400 dark:bg-neutral-800 px-12 py-2 md:p-4 rounded-lg">
-                <div className="flex justify-center items-center w-48 md:w-auto">
-                    {Object.keys(chartData).length > 0 && <Pie data={chartData} />}
-                </div>
+                <div className="flex justify-center items-center w-48 md:w-auto">{Object.keys(chartData).length > 0 && <Pie data={chartData} />}</div>
                 <div className="flex flex-col items-center md:items-left justify-center gap-4 md:gap-12 self-stretch">
                     <div>
                         <h2 className="font-semibold text-center">{getMonth()} Spending</h2>

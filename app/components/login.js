@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -12,7 +12,7 @@ const firebaseConfig = {
     projectId: process.env.DB_PROJECT_ID,
     storageBucket: process.env.DB_STORAGE_BUCKET,
     messagingSenderId: process.env.DB_SENDER_ID,
-    appId: process.env.DB_APP_ID
+    appId: process.env.DB_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -60,14 +60,11 @@ const Login = ({ setUser }) => {
             {loginStatus && (
                 <div>
                     <p className="text-base md:text-xl font-bold my-6 mx-8 absolute top-0 left-0">{name}</p>
-                    <button
-                        onClick={handleLogout}
-                        className="bg-blue-500 text-neutral-100 font-bold text-sm md:text-base py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700"
-                    >
+                    <button onClick={handleLogout} className="bg-blue-500 text-neutral-100 font-bold text-sm md:text-base py-2 px-4 m-4 absolute top-0 right-0 rounded hover:bg-blue-700">
                         Log Out
                     </button>
                 </div>
-            )} 
+            )}
             {loginStatus === false && (
                 <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] flex flex-col gap-2 md:gap-4 items-center justify-center w-5/6">
                     <Image src={"/logo.png"} width={250} height={250} alt={"Plutus logo"} className="w-1/2 h-1/2 sm:w-1/3 sm:h-1/3 lg:w-1/6 lg:h-1/6" />
@@ -76,10 +73,7 @@ const Login = ({ setUser }) => {
                         <h2 className="text-lg md:text-3xl">Begin your journey</h2>
                         <IoArrowDownOutline className="text-2xl md:text-4xl" />
                     </div>
-                    <button
-                        onClick={handleLogin}
-                        className="bg-blue-500 text-neutral-100 font-bold text-base md:text-xl py-2 px-4 mt-2 md:mt-4 rounded hover:bg-blue-700"
-                    >
+                    <button onClick={handleLogin} className="bg-blue-500 text-neutral-100 font-bold text-base md:text-xl py-2 px-4 mt-2 md:mt-4 rounded hover:bg-blue-700">
                         Log In
                     </button>
                 </div>
