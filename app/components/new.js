@@ -86,42 +86,42 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         return inputDate <= today;
     };
 
-    const validateData = () => {
+    const checkForErrors = () => {
         const newErrors = {};
 
         if (date === "" || !isDateAfterToday(date)) {
-            newErrors.date = true;
+            newErrors.date = false;
         }
 
         if (paymentType === "") {
-            newErrors.paymentType = true;
+            newErrors.paymentType = false;
         }
 
         if (purchase === "") {
-            newErrors.purchase = true;
+            newErrors.purchase = false;
         }
 
         if (amount <= 0 || Number.isNaN(amount)) {
-            newErrors.amount = true;
+            newErrors.amount = false;
         }
 
         if (tip < 0 || Number.isNaN(tip)) {
-            newErrors.tip = true;
+            newErrors.tip = false;
         }
 
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateData()) {
+        if (checkForErrors()) {
             return;
         }
 
