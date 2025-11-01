@@ -90,7 +90,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
         };
 
         fetchData();
-    }, [openNew, openEdit, deleteStatus]);
+    }, [user, openNew, openEdit, deleteStatus]);
 
     return (
         <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">

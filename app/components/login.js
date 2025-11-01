@@ -34,7 +34,7 @@ const Login = ({ setUser }) => {
             }
         });
         return () => checkLoginStatus();
-    }, []);
+    }, [setUser]);
 
     const handleLogin = async () => {
         try {

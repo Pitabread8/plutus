@@ -38,7 +38,7 @@ const CategoryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, d
         };
 
         fetchCategories();
-    }, [openNew, openEdit, deleteStatus]);
+    }, [user, openNew, openEdit, deleteStatus]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -59,7 +59,7 @@ const CategoryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, d
         };
 
         fetchCategories();
-    }, [openNew, openEdit, deleteStatus]);
+    }, [user, openNew, openEdit, deleteStatus]);
 
     const deleteCategory = async (id) => {
         const confirmation = window.confirm("Are you sure you want to delete this category?");
@@ -76,7 +76,7 @@ const CategoryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, d
 
     return (
         <>
-            <h1 className="font-bold text-3xl">This Month's Budget</h1>
+            <h1 className="font-bold text-3xl">This Month&apos;s Budget</h1>
             <div className="rounded-xl bg-neutral-200 dark:bg-neutral-900 p-2 md:p-8 flex justify-center items-center w-full max-w-[90%]">
                 <table className="p-8 w-full bg-neutral-200 dark:bg-neutral-900 rounded-lg border-collapse">
                     <thead>

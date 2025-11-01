@@ -55,6 +55,8 @@ const BudgetCategory = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
             newErrors.maximum = true;
         }
 
+        setErrors(newErrors);
+
         if (Object.keys(newErrors).length > 0) {
             return true;
         }

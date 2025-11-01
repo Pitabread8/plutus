@@ -56,7 +56,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         } else {
             setTotal(parseFloat(actualAmount + actualTip).toFixed(2));
         }
-    });
+    }, [amount, tip, selectedType]);
 
     useEffect(() => {
         if (uploadData != "") {
@@ -98,7 +98,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         };
 
         fetchCategories();
-    }, [openEdit]);
+    }, [user, openEdit]);
 
     const isDateAfterToday = (date) => {
         const today = new Date();

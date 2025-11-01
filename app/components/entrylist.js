@@ -42,7 +42,7 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
         };
 
         fetchEntries();
-    }, [openNew, openEdit, deleteStatus]);
+    }, [user, openNew, openEdit, deleteStatus]);
 
     const deleteEntry = async (id) => {
         const confirmation = window.confirm("Are you sure you want to delete this entry?");
