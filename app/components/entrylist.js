@@ -94,11 +94,11 @@ const EntryList = ({ user, setOpenEdit, setDeleteStatus, openNew, openEdit, dele
                             <td className="p-2 text-xs lg:hidden">{convertDate(entry.date).slice(0, 5)}</td>
                             <td className="py-4 px-6 text-base hidden lg:table-cell">{convertDate(entry.date)}</td>
                             <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">{entry.purchase}</td>
-                            <td className="py-4 px-6 text-base hidden lg:table-cell">${entry.amount}</td>
-                            <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.selectedType === "percentage" ? `${entry.tip}%` : `$${entry.tip}`}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">${entry.amount.toFixed(2)}</td>
+                            <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.selectedType === "percentage" ? `${entry.tip.toFixed(2)}%` : `$${entry.tip.toFixed(2)}`}</td>
                             <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.paymentType}</td>
                             <td className="py-4 px-6 text-base hidden lg:table-cell">{entry.notes}</td>
-                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">${entry.total}</td>
+                            <td className="p-2 md:py-4 md:px-6 text-xs md:text-base">${entry.total.toFixed(2)}</td>
                             <td className="p-2 md:px-4 flex space-x-2 text-xs md:text-base">
                                 <button className="bg-purple-500 text-neutral-100 p-2 rounded hover:bg-purple-700" onClick={() => setOpenEdit(entry.id)}>
                                     <MdOutlineEdit />

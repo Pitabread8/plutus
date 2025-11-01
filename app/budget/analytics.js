@@ -99,13 +99,13 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
 
     return (
         <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
-            <div className="grid grid-cols-2 gap-4 p-4">
+            <div className="grid grid-cols-3 gap-6 p-8">
                 {Object.entries(monthTotals).map(([month, total]) => {
                     if (month === currentMonth) return null;
                     return (
                         <div key={month}>
                             <h2 className="font-semibold text-center">{monthNames[month - 1]}</h2>
-                            <p className="font-bold text-center text-xl md:text-4xl">${total.toFixed(2)}</p>
+                            <p className="font-bold text-center text-xl md:text-3xl">${total.toFixed(2)}</p>
                         </div>
                     );
                 })}

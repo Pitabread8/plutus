@@ -27,7 +27,7 @@ const BudgetCategory = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
     };
 
     useEffect(() => {
-        if (openEdit != "") {
+        if (openEdit) {
             const fetchDocument = async () => {
                 const docRef = doc(db, "categories", openEdit);
                 const docSnap = await getDoc(docRef);
@@ -69,7 +69,7 @@ const BudgetCategory = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
             return;
         }
 
-        if (openEdit != "") {
+        if (openEdit) {
             try {
                 const docRef = doc(db, "categories", openEdit);
                 await updateDoc(docRef, {

@@ -71,7 +71,7 @@ export default function UploadEntry({ setUploadData }) {
             <div className="flex items-center justify-center gap-2">
                 <input type="file" id="file_selector" className="hidden" onChange={handleImageChange} />
                 <input type="button" value="Choose File" className="bg-neutral-500 hover:bg-neutral-700 text-neutral-100 font-bold py-1 px-4 rounded" onClick={() => document.getElementById("file_selector").click()} />
-                {fileName != "" && <p className="hidden md:inline">{fileName}</p>}
+                {fileName && <p className="hidden md:inline">{fileName}</p>}
             </div>
             {!loading && file != null && (
                 <button onClick={runOcr} className="bg-blue-500 hover:bg-blue-700 text-neutral-100 font-bold py-1 px-4 rounded">
