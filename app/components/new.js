@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, addDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import UploadEntry from "./upload";
 
 const firebaseConfig = {
@@ -29,9 +29,11 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
     const [selectedType, setSelectedType] = useState("percentage");
     const [paymentType, setPaymentType] = useState("");
     const [notes, setNotes] = useState("");
+    const [category, setCategory] = useState("");
     const [total, setTotal] = useState(0);
     const [errors, setErrors] = useState({});
 
+    const [categories, setCategories] = useState([]);
     const [uploadData, setUploadData] = useState("");
 
     const updateStates = (data) => {
@@ -42,6 +44,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         setTip(data.tip);
         setSelectedType(data.selectedType);
         setNotes("notes" in data ? data.notes : "");
+        setCategory("category" in data ? data.category : "");
         setTotal(data.total);
     };
 
@@ -80,6 +83,23 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         }
     }, [openEdit]);
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const q = query(collection(db, "categories"), where("user", "==", user));
+            const querySnapshot = await getDocs(q);
+            const categoriesList = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            categoriesList.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
+            setCategories(categoriesList);
+        };
+
+        fetchCategories();
+    }, [openEdit]);
+
     const isDateAfterToday = (date) => {
         const today = new Date();
         const inputDate = new Date(date);
@@ -93,12 +113,12 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
             newErrors.date = true;
         }
 
-        if (paymentType === "") {
-            newErrors.paymentType = true;
-        }
-
         if (purchase === "") {
             newErrors.purchase = true;
+        }
+
+        if (paymentType === "") {
+            newErrors.paymentType = true;
         }
 
         if (amount <= 0 || Number.isNaN(amount)) {
@@ -137,6 +157,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                     selectedType,
                     paymentType,
                     notes,
+                    category,
                     total,
                 });
                 setOpenEdit("");
@@ -156,6 +177,7 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                 selectedType,
                 paymentType,
                 notes,
+                category,
                 total,
             });
             setOpenNew(false);
@@ -249,12 +271,33 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
                             </button>
                         </div>
                     </div>
-
                     <div>
                         <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="notes_selector">
                             Notes
                         </label>
                         <textarea value={notes} onChange={(e) => setNotes(e.target.value)} id="notes_selector" name="notes_selector" className="mt-1 block w-full p-2 border border-neutral-900 dark:border-neutral-100 bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm" />
+                    </div>
+                    <div className="w-1/2 md:w-full">
+                        <label className="block text-xs md:text-sm font-medium dark:text-neutral-400" htmlFor="category_selector">
+                            Category
+                        </label>
+                        <div className="mt-1 w-full hidden md:flex flex-row items-center gap-2 text-xs md:text-base">
+                            {categories.map((c) => (
+                                <button key={c.id} type="button" className={`border hover:opacity-100 hover:bg-neutral-700 font-medium py-1 px-4 rounded-xl ${category === c.name ? "opacity-100 bg-neutral-700" : "opacity-50"} ${errors.category ? "border-red-500" : "border-neutral-900 dark:border-neutral-100"}`} onClick={() => setCategory(c.name)}>
+                                    {c.name}
+                                </button>
+                            ))}
+                        </div>
+                        <select value={category} onChange={(e) => setCategory(e.target.value)} id="category_selector" name="category_selector" className={`mt-1 block w-full p-2 border bg-neutral-200 dark:bg-neutral-900 rounded-md text-xs md:text-sm h-[3em] md:hidden ${errors.category ? "border-red-500" : "border-neutral-900 dark:border-neutral-100"}`}>
+                            <option value="" disabled>
+                                Select
+                            </option>
+                            {categories.map((c) => (
+                                <option key={c.id} value={c.name}>
+                                    {c.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <button type="submit" className="w-full bg-blue-500 text-neutral-100 p-2 font-bold rounded-md hover:bg-blue-700">
                         Submit
