@@ -90,23 +90,23 @@ const ExpenseEntry = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         const newErrors = {};
 
         if (date === "" || !isDateAfterToday(date)) {
-            newErrors.date = false;
+            newErrors.date = true;
         }
 
         if (paymentType === "") {
-            newErrors.paymentType = false;
+            newErrors.paymentType = true;
         }
 
         if (purchase === "") {
-            newErrors.purchase = false;
+            newErrors.purchase = true;
         }
 
         if (amount <= 0 || Number.isNaN(amount)) {
-            newErrors.amount = false;
+            newErrors.amount = true;
         }
 
         if (tip < 0 || Number.isNaN(tip)) {
-            newErrors.tip = false;
+            newErrors.tip = true;
         }
 
         setErrors(newErrors);

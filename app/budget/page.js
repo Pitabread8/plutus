@@ -5,7 +5,7 @@ import Login from "../components/login";
 import BudgetCategory from "./new";
 import CategoryList from "./categorylist";
 import { MdOutlineAdd } from "react-icons/md";
-import Analytics from "../components/analytics";
+import Analytics from "./analytics";
 
 export default function Summary() {
     const [user, setUser] = useState("");

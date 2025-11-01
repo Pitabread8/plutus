@@ -48,11 +48,11 @@ const BudgetCategory = ({ user, setOpenNew, openEdit, setOpenEdit }) => {
         const newErrors = {};
 
         if (name === "") {
-            newErrors.name = false;
+            newErrors.name = true;
         }
 
         if (maximum <= 0 || Number.isNaN(maximum)) {
-            newErrors.maximum = false;
+            newErrors.maximum = true;
         }
 
         if (Object.keys(newErrors).length > 0) {
