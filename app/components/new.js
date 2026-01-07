@@ -3,6 +3,8 @@
 // make date full width on mobile and look nicer; set date to today.
 // add a way to track reimbursements -- maybe a way to add a list of all ppl who need to pay back, with buttons to mark their status?
 // use onBlur for real-time error validation??
+// fix category selector width on mobile
+// grid for categories
 
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";

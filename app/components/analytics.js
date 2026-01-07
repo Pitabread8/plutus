@@ -94,7 +94,7 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
     }, [user, openNew, openEdit, deleteStatus]);
 
     return (
-        <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
+        <div className="flex flex-col md:flex-row items-center justify-evenly gap-3 md:gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
             <div className="hidden md:flex flex-col justify-center items-center gap-6">
                 <h1 className="font-extrabold text-8xl mx-36">Plutus</h1>
                 <Link href="/budget" className="bg-blue-500 text-neutral-100 font-semibold text-md md:text-2xl text-center py-3 p-4 rounded hover:bg-blue-700">
@@ -114,6 +114,9 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
                     </div>
                 </div>
             </div>
+            <Link href="/budget" className="md:hidden bg-blue-500 text-neutral-100 font-semibold text-md md:text-2xl text-center py-3 p-4 rounded hover:bg-blue-700">
+                Budget
+            </Link>
         </div>
     );
 };

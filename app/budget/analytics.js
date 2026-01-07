@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -98,28 +99,35 @@ const Analytics = ({ user, openNew, openEdit, deleteStatus }) => {
     }, [user, openNew, openEdit, deleteStatus]);
 
     return (
-        <div className="flex flex-row items-center justify-evenly gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
-            <div className="grid grid-cols-3 gap-6 p-8">
-                {Object.entries(monthTotals).map(([month, total]) => {
-                    if (month === currentMonth) return null;
-                    return (
-                        <div key={month}>
-                            <h2 className="font-semibold text-center">{monthNames[month - 1]}</h2>
-                            <p className="font-bold text-center text-xl md:text-3xl">${total.toFixed(2)}</p>
+        <div className="flex flex-col items-center justify-evenly gap-3 md:gap-8 mt-12 bg-neutral-200 dark:bg-neutral-900 p-4 rounded-xl w-full max-w-[90%]">
+            <Link href="/" className="bg-blue-500 text-neutral-100 font-semibold text-md md:text-2xl text-center py-3 p-4 rounded hover:bg-blue-700">
+                Purchases
+            </Link>
+            <div className="flex flex-row">
+                <div className="grid grid-cols-4 md:grid-cols-3 gap-6 p-3 md:p-8">
+                    {Object.entries(monthTotals).map(([month, total]) => {
+                        if (month === currentMonth) return null;
+                        return (
+                            <div key={month}>
+                                <h2 className="md:hidden font-semibold text-center">{monthNames[month - 1].substring(0, 3).toUpperCase()}</h2>
+                                <h2 className="hidden md:block font-semibold text-center">{monthNames[month - 1]}</h2>
+                                <p className="md:hidden font-bold text-center text-xl lg:text-3xl">${total.toFixed(0)}</p>
+                                <p className="hidden md:block font-bold text-center text-xl lg:text-3xl">${total.toFixed(2)}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className="hidden md:flex flex-row items-center gap-0 justify-evenly flex-1 bg-neutral-400 dark:bg-neutral-800 p-4 rounded-lg">
+                    <div className="flex justify-center items-center w-48 md:w-auto">{Object.keys(chartData).length > 0 && <Pie data={chartData} />}</div>
+                    <div className="flex flex-col items-center md:items-left justify-center gap-4 md:gap-12 self-stretch">
+                        <div>
+                            <h2 className="font-semibold text-center">{getMonth()} Spending</h2>
+                            <p className="font-bold text-center text-2xl lg:text-5xl">${monthTotals[currentMonth] ? monthTotals[currentMonth].toFixed(2) : "0.00"}</p>
                         </div>
-                    );
-                })}
-            </div>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0 md:justify-evenly md:flex-1 bg-neutral-400 dark:bg-neutral-800 px-12 py-2 md:p-4 rounded-lg">
-                <div className="flex justify-center items-center w-48 md:w-auto">{Object.keys(chartData).length > 0 && <Pie data={chartData} />}</div>
-                <div className="flex flex-col items-center md:items-left justify-center gap-4 md:gap-12 self-stretch">
-                    <div>
-                        <h2 className="font-semibold text-center">{getMonth()} Spending</h2>
-                        <p className="font-bold text-center text-2xl md:text-5xl">${monthTotals[currentMonth] ? monthTotals[currentMonth].toFixed(2) : "0.00"}</p>
-                    </div>
-                    <div>
-                        <h2 className="font-semibold text-center">Average Tip</h2>
-                        <p className="font-bold text-center text-2xl md:text-5xl">${tipAverage}</p>
+                        <div>
+                            <h2 className="font-semibold text-center">Average Tip</h2>
+                            <p className="font-bold text-center text-2xl lg:text-5xl">${tipAverage}</p>
+                        </div>
                     </div>
                 </div>
             </div>
